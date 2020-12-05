@@ -8,7 +8,6 @@ const app = express();
 
 const saltRounds = 10;
 
-
 app.get('/usuario', function(req, res) {
 
     let desde = req.query.desde || 0;
@@ -30,7 +29,7 @@ app.get('/usuario', function(req, res) {
                 });
             }
 
-            // Devolver el nº de registros
+            // Función para devolver el nº de registros
             Usuario.count({ estado: true }, (err, numReg) => {
                 res.json({
                     ok: true,
@@ -42,7 +41,7 @@ app.get('/usuario', function(req, res) {
 });
 
 app.post('/usuario', (req, res) => {
-    // Para utilizar body necesito importar body-parser y configurarlo
+    // Utilizar 'body' requiere importar y configurar body-parser
     let body = req.body;
 
     let usuario = new Usuario({
@@ -52,7 +51,7 @@ app.post('/usuario', (req, res) => {
         role: body.role
     });
 
-    // usuarioDB -> El usuario devuelto al grabar en MongoDB
+    // El parámetro usuarioDB es el usuario devuelto al finalizar el callback (al grabar en MongoDB)
     usuario.save((err, usuarioDB) => {
         if (err) {
             return res.status(400).json({
@@ -71,14 +70,14 @@ app.post('/usuario', (req, res) => {
 app.put('/usuario/:id', function(req, res) {
     let id = req.params.id;
 
-    // Se usa la librería underscore, con el método pick para filtrar qué campos queremos usar (el resto no entrarían);
-    //  El primer parámetro sería el body, con TODOS los campos, y como segundo parámetro se le pasa un array con los campos que se quieran actualizar.
+    // Se usa la librería 'underscore', con el método 'pick' para filtrar los campos
+    //  El primer parámetro será el 'body', con TODOS los campos, y como segundo parámetro se le pasa un array con los campos a actualizar.
     let body = _.pick(req.body, ['nombre', 'emil', 'img', , 'role', 'estado']);
 
-    // Encontrar el usuario
+    // Buscar usuario:
     // En el tercer parámetro podemos añadir opciones;
-    //   new -> devuelve la información ctualizada del usuario; si no ponemos esta opción, usuarioDB contendría los valores    previos a la actualización
-    //  runValidators: aplica las validaciones definidas en el Schema; en este caso, al hacer una put podríamos pasar un role que no esté entre los definidos en la enumeración: podrían poner cualquier valor y "tragaría"
+    //   new:true -> devuelve el usuario, una vez ha sido actualizado
+    //  runValidators: true -> aplica las validaciones definidas en el Schema; en este caso, impide grabar cualquier role distinto a los predefinidos
     Usuario.findByIdAndUpdate(id, body, { new: true, runValidators: true }, (err, usuarioDB) => {
         if (err) {
             return res.status(400).json({
@@ -98,9 +97,9 @@ app.delete('/usuario/:id', function(req, res) {
     let id = req.params.id;
 
     // Se puede utilizar el método: 
-    // Usuario.findByIdAndRemove -> si queremos eliminar el registro de la bbdd
+    // Usuario.findByIdAndRemove -> si queremos eliminar 'definitivamente' el registro de la bbdd
 
-    // O, más en la línea actual, cambiar el estado a los registros "eliminados"
+    // O, más en la línea actual, cambiar el estado a los registros que se envíen a eliminar
     let cambiaEstado = { estado: false };
     Usuario.findByIdAndUpdate(id, cambiaEstado, { new: true }, (err, usuarioBorrado) => {
 
@@ -127,6 +126,5 @@ app.delete('/usuario/:id', function(req, res) {
         });
     });
 });
-
 
 module.exports = app;
