@@ -11,7 +11,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // create application/json parser
 app.use(bodyParser.json());
 
-app.use(require('./routes/usuario'));
+//  Configuración global de rutas
+app.use(require('./routes/index'));
 
 const hbs = require('hbs');
 require('../hbs/helpers');

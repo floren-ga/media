@@ -1,5 +1,7 @@
 const express = require('express');
 const Usuario = require('../models/usuario');
+const { verficaToken, verificaAdminRole } = require('../middelwares/autenticacion');
+
 
 // Encriptar la contraseña
 const bcrypt = require('bcrypt');
@@ -8,7 +10,7 @@ const app = express();
 
 const saltRounds = 10;
 
-app.get('/usuario', function(req, res) {
+app.get('/usuario', verficaToken, (req, res) => {
 
     let desde = req.query.desde || 0;
     desde = Number(desde);
@@ -40,7 +42,7 @@ app.get('/usuario', function(req, res) {
         });
 });
 
-app.post('/usuario', (req, res) => {
+app.post('/usuario', [verficaToken, verificaAdminRole], (req, res) => {
     // Utilizar 'body' requiere importar y configurar body-parser
     let body = req.body;
 
@@ -67,7 +69,7 @@ app.post('/usuario', (req, res) => {
     });
 });
 
-app.put('/usuario/:id', function(req, res) {
+app.put('/usuario/:id', [verficaToken, verificaAdminRole], function(req, res) {
     let id = req.params.id;
 
     // Se usa la librería 'underscore', con el método 'pick' para filtrar los campos
@@ -93,7 +95,7 @@ app.put('/usuario/:id', function(req, res) {
     });
 });
 
-app.delete('/usuario/:id', function(req, res) {
+app.delete('/usuario/:id', [verficaToken, verificaAdminRole], function(req, res) {
     let id = req.params.id;
 
     // Se puede utilizar el método: 
