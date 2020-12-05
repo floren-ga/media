@@ -1,20 +1,26 @@
 const express = require('express');
-const app = express();
 const Usuario = require('../models/usuario');
+
+// Encriptar la contraseña
+const bcrypt = require('bcrypt');
+
+const app = express();
+
+const saltRounds = 10;
+
 
 app.get('/usuario', function(req, res) {
     res.render('usuarios');
 });
 
-
 app.post('/usuario', (req, res) => {
-
+    // Para utilizar body necesito importar body-parser y configurarlo
     let body = req.body;
 
     let usuario = new Usuario({
         nombre: body.nombre,
         email: body.email,
-        password: body.password,
+        password: bcrypt.hashSync(body.password, saltRounds),
         role: body.role
     });
 
