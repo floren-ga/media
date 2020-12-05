@@ -10,7 +10,35 @@ const saltRounds = 10;
 
 
 app.get('/usuario', function(req, res) {
-    res.render('usuarios');
+
+    let desde = req.query.desde || 0;
+    desde = Number(desde);
+
+    let limite = req.query.limite || 5;
+    limite = Number(limite);
+
+
+    // El segundo argumento permite seleccionar los campos a devolver
+    Usuario.find({ estado: true }, 'nombre email role estado img')
+        .skip(desde)
+        .limit(limite)
+        .exec((err, usuarios) => {
+            if (err) {
+                return res.status(400).json({
+                    ok: false,
+                    err
+                });
+            }
+
+            // Devolver el nº de registros
+            Usuario.count({ estado: true }, (err, numReg) => {
+                res.json({
+                    ok: true,
+                    usuarios,
+                    numReg
+                });
+            });
+        });
 });
 
 app.post('/usuario', (req, res) => {
@@ -62,11 +90,43 @@ app.put('/usuario/:id', function(req, res) {
         res.json({
             ok: true,
             usuario: usuarioDB
-        })
+        });
     });
 });
-app.delete('/usuario', function(req, res) {
-    res.json('delete Usuario');
+
+app.delete('/usuario/:id', function(req, res) {
+    let id = req.params.id;
+
+    // Se puede utilizar el método: 
+    // Usuario.findByIdAndRemove -> si queremos eliminar el registro de la bbdd
+
+    // O, más en la línea actual, cambiar el estado a los registros "eliminados"
+    let cambiaEstado = { estado: false };
+    Usuario.findByIdAndUpdate(id, cambiaEstado, { new: true }, (err, usuarioBorrado) => {
+
+        if (err) {
+            return res.status(400).json({
+                ok: false,
+                err
+            });
+        }
+
+        // Si no se encontró el id de usuario:
+        if (!usuarioBorrado) {
+            return res.status(400).json({
+                ok: false,
+                err: {
+                    message: "Usuario no encontrado!"
+                }
+            });
+        }
+
+        res.json({
+            ok: true,
+            usuario: usuarioBorrado
+        });
+    });
 });
+
 
 module.exports = app;
