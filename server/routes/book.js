@@ -5,6 +5,7 @@ const _ = require('underscore');
 
 const app = express();
 
+// Definir rutas
 
 app.get('/book', (req, res) => {
 
@@ -28,7 +29,7 @@ app.get('/book', (req, res) => {
             }
 
             // Función para devolver el nº de registros
-            Book.count({ estado: true }, (err, numReg) => {
+            Book.countDocuments({ estado: true }, (err, numReg) => {
                 res.json({
                     ok: true,
                     books,
@@ -132,8 +133,8 @@ app.delete('/book/:id', (req, res) => {
     });
 });
 
-
-
+// Extraer datos de un libro a partir del isbn
+// Utilización de la librería  'node-isbn' 
 app.get('/book/isbn/:isbn', (req, res) => {
     let isbn = req.params.isbn;
     if (isbn === null) {
@@ -162,8 +163,5 @@ app.get('/book/isbn/:isbn', (req, res) => {
         });
     })
 });
-
-// Extraer datos de un libro a partir del isbn
-// Utilización de la librería  'node-isbn' 
 
 module.exports = app;

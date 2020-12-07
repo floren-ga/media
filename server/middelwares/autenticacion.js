@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 // ====================================================
 // Verificar token
 // ====================================================
-let verficaToken = (req, res, next) => {
+let verificaToken = (req, res, next) => {
 
     let token = req.get('token'); //Lee de la cabecera
 
@@ -18,9 +18,9 @@ let verficaToken = (req, res, next) => {
             });
         }
 
+        // Esta función devuelve los datos del usuario logueado
         req.usuario = decoded.usuario;
         next();
-
     });
 };
 
@@ -46,6 +46,6 @@ let verificaAdminRole = (req, res, next) => {
 
 
 module.exports = {
-    verficaToken,
+    verificaToken,
     verificaAdminRole
 }

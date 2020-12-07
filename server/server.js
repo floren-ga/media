@@ -1,16 +1,17 @@
 require('./config/config');
 const express = require('express');
 const mongoose = require('mongoose');
+const morgan = require('morgan');
 const helpers = require('handlebars');
-const bodyParser = require("body-parser");
+// const bodyParser = require("body-parser");
 
 const app = express();
 
 // create application/x-www-form-urlencoded parser
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 // create application/json parser
-app.use(bodyParser.json());
-
+app.use(express.json());
+app.use(morgan('dev')); //opciones: dev, common, combined, short, tiny
 //  Configuración global de rutas
 app.use(require('./routes/index'));
 

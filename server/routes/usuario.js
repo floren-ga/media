@@ -1,6 +1,6 @@
 const express = require('express');
 const Usuario = require('../models/usuario');
-const { verficaToken, verificaAdminRole } = require('../middelwares/autenticacion');
+const { verificaToken, verificaAdminRole } = require('../middelwares/autenticacion');
 
 
 // Encriptar la contraseña
@@ -10,7 +10,7 @@ const app = express();
 
 const saltRounds = 10;
 
-app.get('/usuario', verficaToken, (req, res) => {
+app.get('/usuario', verificaToken, (req, res) => {
 
     let desde = req.query.desde || 0;
     desde = Number(desde);
@@ -32,7 +32,7 @@ app.get('/usuario', verficaToken, (req, res) => {
             }
 
             // Función para devolver el nº de registros
-            Usuario.count({ estado: true }, (err, numReg) => {
+            Usuario.countDocuments({ estado: true }, (err, numReg) => {
                 res.json({
                     ok: true,
                     usuarios,
@@ -42,7 +42,7 @@ app.get('/usuario', verficaToken, (req, res) => {
         });
 });
 
-app.post('/usuario', [verficaToken, verificaAdminRole], (req, res) => {
+app.post('/usuario', [verificaToken, verificaAdminRole], (req, res) => {
     // Utilizar 'body' requiere importar y configurar body-parser
     let body = req.body;
 
@@ -69,7 +69,7 @@ app.post('/usuario', [verficaToken, verificaAdminRole], (req, res) => {
     });
 });
 
-app.put('/usuario/:id', [verficaToken, verificaAdminRole], function(req, res) {
+app.put('/usuario/:id', [verificaToken, verificaAdminRole], function(req, res) {
     let id = req.params.id;
 
     // Se usa la librería 'underscore', con el método 'pick' para filtrar los campos
@@ -95,7 +95,7 @@ app.put('/usuario/:id', [verficaToken, verificaAdminRole], function(req, res) {
     });
 });
 
-app.delete('/usuario/:id', [verficaToken, verificaAdminRole], function(req, res) {
+app.delete('/usuario/:id', [verificaToken, verificaAdminRole], function(req, res) {
     let id = req.params.id;
 
     // Se puede utilizar el método: 
