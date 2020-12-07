@@ -10,7 +10,12 @@ const app = express();
 app.get('/categoria', verificaToken, async(req, res) => {
 
     try {
-        let categorias = await Categoria.find({});
+        let categorias = await Categoria.find()
+            .sort('descripcion')
+            .populate({
+                path: 'usuario',
+                select: ['nombre', 'email']
+            });
         res.json(categorias);
     } catch (error) {
         return res.status(400).json({

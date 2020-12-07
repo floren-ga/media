@@ -11,7 +11,8 @@ process.env.PORT = process.env.PORT || 3000;
 // =========================================================
 
 // 60 seg. x 60 min. * 24 h. * 30 días
-process.env.CADUCIDAD_TOKEN = 60 * 60 * 24 * 30;
+// process.env.CADUCIDAD_TOKEN = 60 * 60 * 24 * 30;
+process.env.CADUCIDAD_TOKEN = '48h';
 
 
 // =========================================================
