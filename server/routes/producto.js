@@ -126,5 +126,19 @@ app.delete('/producto/:id', verificaToken, async(req, res) => {
     }
 });
 
+// Buscar productos
+app.get('/producto/buscar/:termino', verificaToken, async(req, res) => {
+    const termino = req.params.termino;
+    let buscar = RegExp(termino, 'i');
+    try {
+        productos = await Producto.find({ nombre: buscar }).populate('categoria', 'descripcion');
+        res.json(productos);
+    } catch (error) {
+        return res.status(400).json({
+            mensaje: 'Ha ocurrido un error.',
+            error
+        })
+    }
+});
 // Exportación
 module.exports = app;
