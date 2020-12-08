@@ -8,6 +8,9 @@ const Usuario = require('../models/usuario');
 
 const app = express();
 
+app.get('/login', (req, res) => {
+    res.render('login');
+});
 
 app.post('/login', (req, res) => {
 

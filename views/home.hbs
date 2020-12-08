@@ -1,18 +1,56 @@
 {{> head }}
 {{> navbar }}
 
-<div class="jumbotron jumbotron-fluid">
+<div class="bg-light mt-5 p-5 ">
   <div class="container">
     <h1 class="display-4">{{ capitalizar   nombre }} </h1>
-    <p class="lead">Mi colección de vinilos, CD, DVD, libros...</p>
+    <p class="lead">Nuestra colección de vinilos, CD, DVD, libros...</p>
 
-    <div class="card">
-      <div class="card-header">Perfil</div>
-      <div class="card-body">
-        {{!-- <img
-          src="http://localhost:3000/imagen/usuarios/5fcb5c05675a305b144d4a9d-459.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjp7InJvbGUiOiJBRE1JTiIsImVzdGFkbyI6dHJ1ZSwiX2lkIjoiNWZjYjVjMDU2NzVhMzA1YjE0NGQ0YTlkIiwibm9tYnJlIjoiRmxvcmVuU29mdCIsImVtYWlsIjoiZmxvcmVuZ2FAZ21haWwuZXMiLCJfX3YiOjB9LCJpYXQiOjE2MDczNDA3ODksImV4cCI6MTYwNzUxMzU4OX0.4orDRzQvwEF21dmUXcAUmSn63yFkc6yW0AuhkmGKZK4"
-          alt="" height="200px"> --}}
+    <br><br>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+      <div class="card text-center d-flex  justify-content-center align-items-center p-1 m-1" style="width:12rem;">
+        <img src="assets/img/book.png" height="60px" width="60px" class="" alt="">
+        <div class="card-body">
+          <button type="button" class="btn btn-light">Libros <span class="badge bg-secondary">4</span></button>
+        </div>
       </div>
+      <div class="card text-center d-flex  justify-content-center align-items-center  p-1 m-1" style="width:12rem;">
+        <img src="assets/img/cd.png" height="60px" width="60px" class="" alt="">
+        <div class="card-body">
+
+          <button type="button" class="btn btn-light">CD <span class="badge bg-secondary">4</span></button>
+        </div>
+      </div>
+      <div class="card text-center d-flex  justify-content-center align-items-center  p-1 m-1" style="width:12rem;">
+        <img src="assets/img/dvd.png" height="60px" width="60px" class="" alt="">
+        <div class="card-body">
+
+          <button type="button" class="btn btn-light">DVD <span class="badge bg-secondary">4</span></button>
+        </div>
+      </div>
+      <div class="card text-center d-flex  justify-content-center align-items-center  p-1 m-1" style="width:12rem;">
+        <img src="assets/img/bluray.png" height="60px" width="60px" class="" alt="">
+        <div class="card-body">
+
+          <button type="button" class="btn btn-light">BLURAY <span class="badge bg-secondary">4</span></button>
+        </div>
+      </div>
+      <div class="card text-center d-flex  justify-content-center align-items-center  p-1 m-1" style="width:12rem;">
+        <img src="assets/img/vinilo.png" height="60px" width="60px" class="" alt="">
+        <div class="card-body">
+
+          <button type="button" class="btn btn-light">Vinilos <span class="badge bg-secondary">4</span></button>
+        </div>
+      </div>
+
+    </div>
+
+
+    <div>
+
+      {{#each categorias}}
+      <p>{{descripcion}}</p>
+      {{/each}}
     </div>
 
   </div>

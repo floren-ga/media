@@ -1,0 +1,20 @@
+{{> head }}
+{{> navbar }}
+
+
+<main class="form-signin text-center">
+  <form action="/login" method="POST">
+    <img class="mb-4" src="assets/img/floren.png" alt="" height="57">
+    <h1 class="h3 mb-3 fw-normal">Inicie sesión</h1>
+    <label for="inputEmail" class="visually-hidden">Correo electrónico</label>
+    <input type="email" id="email" name="email" class="form-control" placeholder="Correo electrónico" required
+      autofocus>
+    <label for="inputPassword" class="visually-hidden">Password</label>
+    <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+
+    <button class="w-100 btn btn-lg btn-primary" type="submit">Entrar</button>
+    <p class="mt-5 mb-3 text-muted">&copy; florenSoft 2020</p>
+  </form>
+</main>
+
+{{> footer}}

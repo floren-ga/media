@@ -16,7 +16,8 @@ app.get('/categoria', verificaToken, async(req, res) => {
                 path: 'usuario',
                 select: ['nombre', 'email']
             });
-        res.json(categorias);
+        //res.json(categorias);
+        res.sender('home', categorias);
     } catch (error) {
         return res.status(400).json({
             mensaje: 'Ha ocurrido un error.',
